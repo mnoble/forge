@@ -4,13 +4,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'forge/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "forge"
+  gem.name          = "forge-factories"
   gem.version       = Forge::VERSION
   gem.authors       = ["Matte Noble"]
   gem.email         = ["me@mattenoble.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Barebones factories}
+  gem.summary       = %q{Barebones factories}
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
