@@ -1,29 +1,60 @@
 # Forge
 
-TODO: Write a gem description
+A Factory library that's about as barebones as you can get.
 
-## Installation
+## Define Factories
 
-Add this line to your application's Gemfile:
+```ruby
+Forge.define(:user, User) do |u|
+  u.name = "Spike Spiegel"
+  u.location = "Mars"
+end
+```
 
-    gem 'forge'
+## Defining Factories That Use Other Factories
 
-And then execute:
+```ruby
+Forge.define(:ship, Ship) do |s|
+  s.name = "Bebop"
+end
 
-    $ bundle
+Forge.define(:user, User) do |u|
+  u.name = "Spike Spiegel"
+  u.ship = Forge.build(:ship)
+end
+```
 
-Or install it yourself as:
+## Building Objects
 
-    $ gem install forge
+```ruby
+Forge.build(:user)
+```
 
-## Usage
+## Building Objects and Overriding Attributes
 
-TODO: Write usage instructions here
+```ruby
+Forge.build(:user, name: "Jet")
+```
 
-## Contributing
+## DSL
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+You can drop the `Forge` part of the methods if you include
+`Forge::DSL`.
+
+```ruby
+RSpec.configure do |config|
+  config.include Forge::DSL
+end
+
+it "..." do
+  build(:user).should be_awesome
+end
+```
+
+## Errors
+
+`Forge::DuplicateFactoryError`
+Raised when you try to define two factories using the same name.
+
+`Forge::MissingFactoryError`
+Raised when you try to build a factory that has not been defined.
