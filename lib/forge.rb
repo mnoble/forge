@@ -16,6 +16,11 @@ module Forge
 
   def self.reset!
     @registry = {}
+    @sequence = Sequence.new
+  end
+
+  def self.sequence
+    @sequence ||= Sequence.new
   end
 
   def self.define(name, klass, &block)
@@ -32,6 +37,20 @@ module Forge
   def self.create(name, attrs={})
     raise MissingFactoryError unless @registry[name]
     @registry[name].create(attrs)
+  end
+
+  class Sequence
+    def initialize
+      @n = 1
+    end
+
+    def value
+      @n
+    end
+
+    def next 
+      @n += 1
+    end
   end
 
   class Definition

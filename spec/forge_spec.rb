@@ -45,4 +45,19 @@ describe Forge do
 
     Forge.build(:bounty_hunter).partner.name.should == "Jet"
   end
+
+  describe "sequence" do
+    it "keeps a integer sequence" do
+      Forge.sequence.value.should == 1
+      Forge.sequence.next.should == 2
+      Forge.sequence.value.should == 2
+    end
+
+    it "is reset" do
+      Forge.sequence.next
+      Forge.sequence.value.should == 2
+      Forge.reset!
+      Forge.sequence.value.should == 1
+    end
+  end
 end
